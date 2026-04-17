@@ -10,6 +10,13 @@ import {
   toWorldPosition,
   tryStartGridMove,
 } from "../systems/GridMovement";
+import {
+  createInteractableRegistry,
+  createInteractionKey,
+  getFacingTile,
+  objectToTilePosition,
+  type InteractableEntry,
+} from "../systems/interaction";
 
 const MAP_KEY = "farm-map";
 const GRASS_TILESET_KEY = "farm-tiles-grass";
@@ -27,6 +34,8 @@ export class HelloFarmScene extends Phaser.Scene {
     isMoving: false,
   };
   private movementKeys?: Record<string, Phaser.Input.Keyboard.Key>;
+  private interactKey?: Phaser.Input.Keyboard.Key;
+  private interactables = new Map<string, InteractableEntry>();
 
   constructor() {
     super("hello-farm");
@@ -83,12 +92,27 @@ export class HelloFarmScene extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     }) as Record<string, Phaser.Input.Keyboard.Key> | undefined;
+    this.interactKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
-    const interactables = map.getObjectLayer("Interactables");
-    const sign = interactables?.objects[0];
+    const interactableObjects = map.getObjectLayer("Interactables")?.objects ?? [];
+    const sign = interactableObjects[0];
     const prompt = sign?.properties?.find(
       (property: { name: string; value: unknown }) => property.name === "prompt"
     )?.value;
+
+    this.interactables = createInteractableRegistry(
+      interactableObjects
+        .filter((object) => object.type === "sign")
+        .map((object) => ({
+          position: objectToTilePosition(object, map.tileWidth, map.tileHeight),
+          interact: () => {
+            const name = object.name || "interactable";
+            globalThis.console.log(
+              `[interaction] ${name}: Farm sign says hello from the playable slice.`
+            );
+          },
+        }))
+    );
 
     this.add
       .text(8, 8, "Farm slice loaded", {
@@ -101,7 +125,7 @@ export class HelloFarmScene extends Phaser.Scene {
       .setDepth(3);
 
     this.add
-      .text(8, GAME_HEIGHT - 24, typeof prompt === "string" ? prompt : "Interactable hook ready.", {
+      .text(8, GAME_HEIGHT - 24, typeof prompt === "string" ? `Move with arrows/WASD, press E to interact. ${prompt}` : "Move with arrows/WASD, press E to interact.", {
         color: "#16351a",
         fontFamily: FONT_FAMILY,
         fontSize: "10px",
@@ -116,6 +140,10 @@ export class HelloFarmScene extends Phaser.Scene {
   }
 
   update(): void {
+    if (this.interactKey && Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+      this.tryInteract();
+    }
+
     const direction = this.getJustPressedDirection();
     if (direction) {
       this.handleMoveRequest(direction);
@@ -196,6 +224,12 @@ export class HelloFarmScene extends Phaser.Scene {
         }
       },
     });
+  }
+
+  private tryInteract(): void {
+    const interactionTile = getFacingTile(this.movementState.position, this.movementState.facing);
+    const interactable = this.interactables.get(createInteractionKey(interactionTile));
+    interactable?.interact();
   }
 
   private findOpenSpawnTile(map: Phaser.Tilemaps.Tilemap): GridPosition {
