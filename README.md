@@ -51,8 +51,20 @@ A typical local workflow looks like this:
 - Phaser game bootstrapping from `src/main.ts`
 - Shared constants and game config modules for later farm-scene expansion
 - A trivial Vitest unit test under `tests/` to validate the test harness
-- A visible placeholder `HelloFarmScene` so a clean clone shows working game output quickly
+- A farm-scene pipeline that preloads a Tiled TMJ map, Sprout Lands tilesets, and a player spritesheet
+
+## Asset sourcing
+
+The current playable slice uses art from the free Sprout Lands Basic pack by Cup Nooble.
+See `assets/LICENSE` for source links, license notes, and required credit.
+
+## Editing the farm map
+
+- Open `assets/maps/farm.tmj` directly in Tiled.
+- The map uses relative image paths into `assets/tilesets/`, so the checked-in tilesets resolve without extra setup.
+- The interactable sign hook is stored in the `Interactables` object layer.
+- The blocking tiles are represented in the `Collision` layer.
 
 ## Next steps
 
-Later tickets can add gameplay systems, asset loading, additional scenes, and fuller project documentation.
+Later tickets can add gameplay systems, movement, interaction handling, additional scenes, and fuller project documentation.

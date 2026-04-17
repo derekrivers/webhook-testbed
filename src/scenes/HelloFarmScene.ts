@@ -1,57 +1,74 @@
 import Phaser from "phaser";
-import {
-  FONT_FAMILY,
-  GAME_HEIGHT,
-  GAME_WIDTH,
-  TILE_SIZE,
-} from "../config/constants";
+import { FONT_FAMILY, GAME_HEIGHT, GAME_WIDTH } from "../config/constants";
+
+const MAP_KEY = "farm-map";
+const GRASS_TILESET_KEY = "farm-tiles-grass";
+const FENCE_TILESET_KEY = "farm-tiles-fences";
+const WATER_TILESET_KEY = "farm-tiles-water";
+const PLAYER_SPRITESHEET_KEY = "farm-player";
 
 export class HelloFarmScene extends Phaser.Scene {
   constructor() {
     super("hello-farm");
   }
 
-  create(): void {
-    const centerX = GAME_WIDTH / 2;
-    const centerY = GAME_HEIGHT / 2;
+  preload(): void {
+    this.load.tilemapTiledJSON(MAP_KEY, "assets/maps/farm.tmj");
+    this.load.image(GRASS_TILESET_KEY, "assets/tilesets/sprout-lands-grass.png");
+    this.load.image(FENCE_TILESET_KEY, "assets/tilesets/sprout-lands-fences.png");
+    this.load.image(WATER_TILESET_KEY, "assets/tilesets/sprout-lands-water.png");
+    this.load.spritesheet(PLAYER_SPRITESHEET_KEY, "assets/sprites/sprout-lands-player.png", {
+      frameWidth: 48,
+      frameHeight: 48,
+    });
+  }
 
-    this.add.rectangle(centerX, centerY, GAME_WIDTH, GAME_HEIGHT, 0x87c97f);
-    this.add.rectangle(
-      centerX,
-      centerY + TILE_SIZE * 2,
-      TILE_SIZE * 10,
-      TILE_SIZE * 4,
-      0x8b5a2b
+  create(): void {
+    const map = this.make.tilemap({ key: MAP_KEY });
+    const groundTiles = map.addTilesetImage("sprout-lands-grass", GRASS_TILESET_KEY);
+    const fenceTiles = map.addTilesetImage("sprout-lands-fences", FENCE_TILESET_KEY);
+    const waterTiles = map.addTilesetImage("sprout-lands-water", WATER_TILESET_KEY);
+    const tilesets = [groundTiles, fenceTiles, waterTiles].filter(
+      (tileset): tileset is Phaser.Tilemaps.Tileset => Boolean(tileset)
     );
-    this.add.rectangle(
-      centerX,
-      centerY + TILE_SIZE,
-      TILE_SIZE * 8,
-      TILE_SIZE * 3,
-      0x6ea64f
-    );
-    this.add.circle(
-      centerX - TILE_SIZE * 4,
-      centerY - TILE_SIZE * 2,
-      TILE_SIZE,
-      0xf9d65c
-    );
+
+    map.createLayer("Ground", tilesets);
+    map.createLayer("Decor", tilesets);
+
+    const collisionLayer = map.createLayer("Collision", tilesets);
+    collisionLayer?.setVisible(false);
+    collisionLayer?.setCollisionByExclusion([-1, 0]);
+
+    const player = this.add.sprite(120, 96, PLAYER_SPRITESHEET_KEY, 0);
+    player.setDepth(2);
+
+    const interactables = map.getObjectLayer("Interactables");
+    const sign = interactables?.objects[0];
+    const prompt = sign?.properties?.find(
+      (property: { name: string; value: unknown }) => property.name === "prompt"
+    )?.value;
 
     this.add
-      .text(centerX, centerY - TILE_SIZE * 4, "Hello Farm", {
+      .text(8, 8, "Farm slice loaded", {
         color: "#16351a",
         fontFamily: FONT_FAMILY,
-        fontSize: "18px",
+        fontSize: "12px",
         fontStyle: "bold",
       })
-      .setOrigin(0.5);
+      .setScrollFactor(0)
+      .setDepth(3);
 
     this.add
-      .text(centerX, centerY + TILE_SIZE * 5, "Phaser + Vite + TypeScript", {
+      .text(8, GAME_HEIGHT - 24, typeof prompt === "string" ? prompt : "Interactable hook ready.", {
         color: "#16351a",
         fontFamily: FONT_FAMILY,
         fontSize: "10px",
+        wordWrap: { width: GAME_WIDTH - 16 },
       })
-      .setOrigin(0.5);
+      .setScrollFactor(0)
+      .setDepth(3);
+
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.centerOn(map.widthInPixels / 2, map.heightInPixels / 2);
   }
 }
