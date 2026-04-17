@@ -14,9 +14,7 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(circle at top, #1f4d27, #0f1f11 55%),
-    #0f1f11;
+  background: radial-gradient(circle at top, #1f4d27, #0f1f11 55%), #0f1f11;
 }
 
 #game {

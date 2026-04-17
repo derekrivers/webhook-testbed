@@ -16,9 +16,26 @@ export class HelloFarmScene extends Phaser.Scene {
     const centerY = GAME_HEIGHT / 2;
 
     this.add.rectangle(centerX, centerY, GAME_WIDTH, GAME_HEIGHT, 0x87c97f);
-    this.add.rectangle(centerX, centerY + TILE_SIZE * 2, TILE_SIZE * 10, TILE_SIZE * 4, 0x8b5a2b);
-    this.add.rectangle(centerX, centerY + TILE_SIZE, TILE_SIZE * 8, TILE_SIZE * 3, 0x6ea64f);
-    this.add.circle(centerX - TILE_SIZE * 4, centerY - TILE_SIZE * 2, TILE_SIZE, 0xf9d65c);
+    this.add.rectangle(
+      centerX,
+      centerY + TILE_SIZE * 2,
+      TILE_SIZE * 10,
+      TILE_SIZE * 4,
+      0x8b5a2b
+    );
+    this.add.rectangle(
+      centerX,
+      centerY + TILE_SIZE,
+      TILE_SIZE * 8,
+      TILE_SIZE * 3,
+      0x6ea64f
+    );
+    this.add.circle(
+      centerX - TILE_SIZE * 4,
+      centerY - TILE_SIZE * 2,
+      TILE_SIZE,
+      0xf9d65c
+    );
 
     this.add
       .text(centerX, centerY - TILE_SIZE * 4, "Hello Farm", {
