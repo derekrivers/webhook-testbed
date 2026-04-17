@@ -34,7 +34,7 @@ A typical local workflow looks like this:
 
 1. Run `npm install` after cloning or when dependencies change.
 2. Use `npm run dev` while iterating on game code in `src/`.
-3. Before opening a change for review, run:
+3. Before opening a change for review, run the full validation set:
    ```bash
    npm run lint
    npm run format:check
@@ -43,6 +43,14 @@ A typical local workflow looks like this:
    npm run build
    ```
 4. If formatting fails, run `npm run format`, then re-run the checks.
+
+## Playable slice behavior
+
+- Move one tile at a time with the arrow keys or `W`, `A`, `S`, `D`.
+- The camera follows the player and stays clamped to the farm map bounds.
+- Press `E` to check the tile directly in front of the player based on their current facing direction.
+- The authored sign in the farm map is registered as an interactable proof of concept and logs a recognizable message to the browser console.
+- Pressing `E` when no interactable is in front of the player does nothing.
 
 ## What is included
 
@@ -63,6 +71,7 @@ See `assets/LICENSE` for source links, license notes, and required credit.
 - Open `assets/maps/farm.tmj` directly in Tiled.
 - The map uses relative image paths into `assets/tilesets/`, so the checked-in tilesets resolve without extra setup.
 - The interactable sign hook is stored in the `Interactables` object layer.
+- Add new interaction targets in that object layer and keep them aligned to the tile grid so the interaction registry can resolve them cleanly.
 - The blocking tiles are represented in the `Collision` layer.
 
 ## Next steps
