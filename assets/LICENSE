@@ -1,0 +1,25 @@
+Sprout Lands asset notes
+========================
+
+Imported files in this repository:
+- assets/tilesets/sprout-lands-grass.png
+- assets/tilesets/sprout-lands-fences.png
+- assets/tilesets/sprout-lands-water.png
+- assets/sprites/sprout-lands-player.png
+
+Original source:
+- https://cupnooble.itch.io/sprout-lands-asset-pack
+
+Mirror used to retrieve the exact free-pack files checked into this repo:
+- https://github.com/perquis/sprout_lands
+
+Author credit:
+- Cup Nooble
+
+Free version license text from the original pack page:
+- This asset pack can be used in any non-commercial project.
+- You may modify the assets as you wish.
+- The free asset pack cannot be used in commercial projects.
+- The free asset pack cannot be resold or redistributed, even if modified.
+
+This repository keeps only the minimum files needed for the first playable slice and preserves attribution here for downstream reviewers.
