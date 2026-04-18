@@ -6,7 +6,137 @@
     <title>Webhook Testbed</title>
   </head>
   <body>
-    <div id="game"></div>
+    <main class="app-shell">
+      <section class="feature-board" aria-labelledby="feature-board-title">
+        <header class="feature-board__header">
+          <p class="feature-board__eyebrow">Roadmap Preview</p>
+          <h1 id="feature-board-title">Feature Board</h1>
+          <p class="feature-board__subtitle">
+            A shared view of the experiences, systems, and polish items we plan
+            to build next. This template is ready to be populated with real
+            roadmap data later.
+          </p>
+        </header>
+
+        <div class="feature-board__groups">
+          <section class="feature-group" aria-labelledby="planned-title">
+            <div class="feature-group__heading">
+              <h2 id="planned-title">Planned</h2>
+              <span class="status-badge status-badge--planned">Queued</span>
+            </div>
+            <ul class="feature-list">
+              <li>
+                <article class="feature-card">
+                  <div class="feature-card__meta">
+                    <span class="feature-card__tag">Core Loop</span>
+                    <span class="feature-card__priority">High Impact</span>
+                  </div>
+                  <h3>Seasonal Quest Chains</h3>
+                  <p>
+                    Add a rotating set of guided objectives that highlight new
+                    mechanics and reward returning players.
+                  </p>
+                </article>
+              </li>
+              <li>
+                <article class="feature-card">
+                  <div class="feature-card__meta">
+                    <span class="feature-card__tag">Economy</span>
+                    <span class="feature-card__priority">Medium Lift</span>
+                  </div>
+                  <h3>Crafting Milestone Tracker</h3>
+                  <p>
+                    Surface recipe progress, unlock hints, and milestone rewards
+                    in a simple progression view.
+                  </p>
+                </article>
+              </li>
+            </ul>
+          </section>
+
+          <section class="feature-group" aria-labelledby="in-progress-title">
+            <div class="feature-group__heading">
+              <h2 id="in-progress-title">In Progress</h2>
+              <span class="status-badge status-badge--progress">Building</span>
+            </div>
+            <ul class="feature-list">
+              <li>
+                <article class="feature-card">
+                  <div class="feature-card__meta">
+                    <span class="feature-card__tag">UX</span>
+                    <span class="feature-card__priority">Active Sprint</span>
+                  </div>
+                  <h3>Playable Onboarding Checklist</h3>
+                  <p>
+                    Turn first-session setup into a clearer checklist with quick
+                    wins, guidance, and visible progress.
+                  </p>
+                </article>
+              </li>
+              <li>
+                <article class="feature-card">
+                  <div class="feature-card__meta">
+                    <span class="feature-card__tag">Systems</span>
+                    <span class="feature-card__priority">Prototype</span>
+                  </div>
+                  <h3>Weather-Driven Farm Bonuses</h3>
+                  <p>
+                    Experiment with daily modifiers that change yields, visuals,
+                    and recommended play patterns.
+                  </p>
+                </article>
+              </li>
+            </ul>
+          </section>
+
+          <section class="feature-group" aria-labelledby="ideas-title">
+            <div class="feature-group__heading">
+              <h2 id="ideas-title">Ideas</h2>
+              <span class="status-badge status-badge--ideas">Exploring</span>
+            </div>
+            <ul class="feature-list">
+              <li>
+                <article class="feature-card">
+                  <div class="feature-card__meta">
+                    <span class="feature-card__tag">Social</span>
+                    <span class="feature-card__priority">Future</span>
+                  </div>
+                  <h3>Neighbor Visit Snapshot</h3>
+                  <p>
+                    Share a lightweight summary of farm progress, favorite
+                    builds, and recent achievements with friends.
+                  </p>
+                </article>
+              </li>
+              <li>
+                <article class="feature-card">
+                  <div class="feature-card__meta">
+                    <span class="feature-card__tag">Customization</span>
+                    <span class="feature-card__priority">Wishlist</span>
+                  </div>
+                  <h3>Theme Presets for Build Areas</h3>
+                  <p>
+                    Save and reapply layout presets for decorative zones so
+                    players can switch moods more easily.
+                  </p>
+                </article>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </section>
+
+      <section class="game-shell" aria-labelledby="game-preview-title">
+        <div class="game-shell__header">
+          <h2 id="game-preview-title">Prototype Preview</h2>
+          <p>
+            The current Phaser mount stays available below the board while the
+            roadmap content becomes the primary page experience.
+          </p>
+        </div>
+        <div id="game"></div>
+      </section>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
