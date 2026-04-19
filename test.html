@@ -72,7 +72,7 @@
   <body>
     <main>
       <h1>Test Log</h1>
-      <p>This page records a simple test completion entry in a table.</p>
+      <p>This page records simple test completion entries in a table.</p>
 
       <table aria-label="Test completion log">
         <thead>
@@ -87,21 +87,28 @@
 
     <script type="module">
       const tableBody = document.getElementById('test-log');
-      const row = document.createElement('tr');
-      const dateCell = document.createElement('td');
-      const messageCell = document.createElement('td');
-
       const formattedDate = new Date().toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
       });
 
-      dateCell.textContent = formattedDate;
-      messageCell.textContent = 'Test completed';
+      const logEntries = [
+        'Test completed',
+        'Additional test run recorded',
+      ];
 
-      row.append(dateCell, messageCell);
-      tableBody?.append(row);
+      logEntries.forEach((message) => {
+        const row = document.createElement('tr');
+        const dateCell = document.createElement('td');
+        const messageCell = document.createElement('td');
+
+        dateCell.textContent = formattedDate;
+        messageCell.textContent = message;
+
+        row.append(dateCell, messageCell);
+        tableBody?.append(row);
+      });
     </script>
   </body>
 </html>
