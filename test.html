@@ -87,21 +87,28 @@
 
     <script type="module">
       const tableBody = document.getElementById('test-log');
-      const row = document.createElement('tr');
-      const dateCell = document.createElement('td');
-      const messageCell = document.createElement('td');
-
-      const formattedDate = new Date().toLocaleDateString(undefined, {
+      const today = new Date().toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
       });
 
-      dateCell.textContent = formattedDate;
-      messageCell.textContent = 'Test completed';
+      const logEntries = [
+        { date: today, message: 'Test completed' },
+        { date: 'April 24, 2026', message: 'Initial test completed' },
+      ];
 
-      row.append(dateCell, messageCell);
-      tableBody?.append(row);
+      for (const entry of logEntries) {
+        const row = document.createElement('tr');
+        const dateCell = document.createElement('td');
+        const messageCell = document.createElement('td');
+
+        dateCell.textContent = entry.date;
+        messageCell.textContent = entry.message;
+
+        row.append(dateCell, messageCell);
+        tableBody?.append(row);
+      }
     </script>
   </body>
 </html>
